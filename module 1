@@ -1,0 +1,70 @@
+package taskmgmt;
+
+abstract class Task {
+    protected String taskId;
+    protected String description;
+    protected String status;
+
+    public Task(String taskId, String description) {
+        this.taskId = taskId;
+        this.description = description;
+        this.status = "Pending";
+    }
+
+    public abstract void displayDetails();
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+}
+
+class TodoTask extends Task {
+    private String category;
+
+    public TodoTask(String taskId, String description, String category) {
+        super(taskId, description);
+        this.category = category;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("TodoTask: " + taskId + " | Desc: " + description + " | Category: " + category + " | Status: " + status);
+    }
+}
+
+class ProjectTask extends Task {
+    private String assignee;
+
+    public ProjectTask(String taskId, String description, String assignee) {
+        super(taskId, description);
+        this.assignee = assignee;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("ProjectTask: " + taskId + " | Desc: " + description + " | Assignee: " + assignee + " | Status: " + status);
+    }
+}
+
+class User {
+    private String name;
+    private String email;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public String getName() { return name; }
+}
+
+public class mod1 {
+    public static void main(String[] args) {
+        Task t1 = new TodoTask("TASK001", "Complete report", "Work");
+        Task t2 = new ProjectTask("TASK002", "Design UI", "Alice");
+        t1.displayDetails();
+        t2.displayDetails();
+
+        User u1 = new User("Bob", "bob@example.com");
+        System.out.println("User: " + u1.getName() + " (" + u1.getEmail() + ")");
+    }
+}
