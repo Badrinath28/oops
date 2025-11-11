@@ -1,0 +1,43 @@
+package taskmgmt;
+import java.io.*;
+
+class InvalidTaskException extends Exception {
+    public InvalidTaskException(String msg) { super(msg); }
+}
+class TaskOperation {
+    private Task task;
+
+    public Ta task) {
+        this.task = task;
+    }
+
+    public void updateStatus(String newStatus) throws InvalidTaskException {
+        if (!newStatus.equals("Pending") && !newStatus.equals("In Progress") && !newStatus.equals("Completed")) {
+            throw new InvalidTaskException("Invalid status!");
+        }
+        task.setStatus(newStatus);
+    }
+
+    public void logOperation(String operation) {
+        try (FileWriter fw = new FileWriter("task_log.txt", true)) {
+            fw.write(operation + " for " + task.taskId + " - Status: " + task.getStatus() + "\n");
+            System.out.println("Operation logged to task_log.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class mod2 {
+    public static void main(String[] args) {
+        try {
+            TodoTask task = new TodoTask("TASK001", "Complete report", "Work");
+            TaskOperation op = new TaskOperation(task);
+            op.updateStatus("In Progress");
+            System.out.println("Updated Status: " + task.getStatus());
+            op.logOperation("Status Update");
+        } catch (InvalidTaskException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
