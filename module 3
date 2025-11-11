@@ -1,0 +1,46 @@
+package taskmgmt;
+import java.util.*;
+
+class GenericTaskList<T extends Task> {
+    private List<T> tasks = new ArrayList<>();
+
+    public synchronized void addTask(T task) {
+        tasks.add(task);
+        System.out.println("Added task: " + task.taskId);
+    }
+
+    public synchronized List<T> getTasks() {
+        return tasks;
+    }
+}
+
+class ReminderThread extends Thread {
+    private GenericTaskList<Task> taskList;
+    private String taskId;
+
+    public ReminderThread(GenericTaskList<Task> taskList, String taskId) {
+        this.taskList = taskList;
+        this.taskId = taskId;
+    }
+
+    public void run() {
+        // Simulate reminder after delay
+        try {
+            Thread.sleep(2000);
+            System.out.println("Reminder: Task " + taskId + " is due soon!");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class mod3 {
+    public static void main(String[] args) {
+        GenericTaskList<Task> list = new GenericTaskList<>();
+        Task t1 = new TodoTask("TASK001", "Complete report", "Work");
+        list.addTask(t1);
+
+        ReminderThread r1 = new ReminderThread(list, "TASK001");
+        r1.start();
+    }
+} 
