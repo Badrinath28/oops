@@ -1,0 +1,35 @@
+package taskmgmt;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class mod5 {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Task Management Application");
+        JLabel l1 = new JLabel("Task Description:");
+        JTextField t1 = new JTextField(15);
+        JLabel l2 = new JLabel("Priority (High/Med/Low):");
+        JTextField t2 = new JTextField(10);
+        JButton btn = new JButton("Add Task");
+        JTextArea area = new JTextArea(5, 20);
+
+        JPanel panel = new JPanel();
+        panel.add(l1); panel.add(t1);
+        panel.add(l2); panel.add(t2);
+        panel.add(btn);
+        panel.add(new JScrollPane(area));
+
+        btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String desc = t1.getText();
+                String pri = t2.getText();
+                area.setText("Added Task:\nDescription: " + desc + "\nPriority: " + pri + "\nStatus: Pending");
+                t1.setText(""); t2.setText("");
+            }
+        });
+
+        frame.add(panel);
+        frame.setSize(350, 300);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+}
