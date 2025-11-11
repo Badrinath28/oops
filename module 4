@@ -1,0 +1,41 @@
+Server file:
+package taskmgmt;
+import java.io.*;
+import java.net.*;
+
+public class mod4_server {
+    public static void main(String[] args) throws Exception {
+        ServerSocket ss = new ServerSocket(7000);
+        System.out.println("Task Management Server started...");
+        Socket s = ss.accept();
+        BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+        out.println("Connected to Task Server!");
+        String taskReq = in.readLine();
+        System.out.println("Task request: " + taskReq);
+        out.println("Task synced: " + taskReq);
+
+        s.close();
+        ss.close();
+    }
+} 
+Client file:
+package taskmgmt;
+import java.io.*;
+import java.net.*;
+
+public class mod4_client {
+    public static void main(String[] args) throws Exception {
+        Socket s = new Socket("localhost", 7000);
+        BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+        System.out.println(in.readLine()); // Connection message
+        out.println("Add Task: TASK003 - Review code");
+        System.out.println(in.readLine()); // Synced message
+
+        s.close();
+    }
+}
+ 
